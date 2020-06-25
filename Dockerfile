@@ -2,7 +2,7 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine AS build-env
 WORKDIR /app
 
 # Copiar csproj e restaurar dependencias
-COPY *.csproj ./
+COPY ./RatesAPI/RatesAPI.csproj ./
 RUN dotnet restore
 
 RUN pwsh -Command Write-Host "RatesAPI: Building Docker image..."
