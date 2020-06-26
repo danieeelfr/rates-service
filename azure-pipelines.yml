@@ -20,8 +20,8 @@ steps:
 
 - task: Docker@2
   inputs:
-    containerRegistry: 'RatesAPI-Azure-Container Registry'
-    repository: 'danielfrmyfirstazuredevops'
+    containerRegistry: 'danieeelfrazuredevops|Azure Container Registry'
+    repository: 'danielfr-softplan-rate-services-api'
     command: 'buildAndPush'
     Dockerfile: '**/Dockerfile'
     tags: |
