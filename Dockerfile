@@ -26,7 +26,7 @@ RUN dotnet build "./RatesAPI/RatesAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish
 # RUN dotnet publish -c Release -o out
-RUN dotnet publish -c Release -o /app/publish
+RUN sudo dotnet publish -c Release -o /app/publish
 
 # Build da imagem
 FROM base AS final
