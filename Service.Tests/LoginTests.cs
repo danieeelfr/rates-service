@@ -1,7 +1,4 @@
 using Xunit;
-using Core.Filters.Login;
-using Core.Services;
-using Core.Exceptions;
 
 namespace Services.Tests
 {

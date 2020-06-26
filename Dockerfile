@@ -1,18 +1,34 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build-env
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS base
 WORKDIR /app
+EXPOSE 5000
+EXPOSE 5001
+ENV ASPNETCORE_URLS=http://*:5000
 
-# Copiar csproj e restaurar dependencias
-COPY ./RatesAPI/RatesAPI.csproj ./
-RUN dotnet restore
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+WORKDIR /src
+COPY ["RatesAPI/RatesAPI.csproj", "./RatesAPI/"]
+COPY ["Services/Services.csproj", "./Services/"]
+COPY ["Core/Core.csproj", "./Core/"]
+COPY ["Service.Tests/Service.Tests.csproj", "./Service.Tests/"]
 
-RUN pwsh -Command Write-Host "RatesAPI: Building Docker image..."
+RUN dotnet restore "./RatesAPI/RatesAPI.csproj"
+
+COPY . .
+COPY ["RatesAPI/.", "./RatesAPI/"]
+COPY ["Services/.", "./Services/"]
+COPY ["Core/.", "./Core/"]
+WORKDIR "/src/."
+
+RUN dotnet build "./RatesAPI/RatesAPI.csproj" -c Release -o /app/build
 
 # Build da aplicacao
-COPY . ./
-RUN dotnet publish -c Release -o out
+
+FROM build AS publish
+# RUN dotnet publish -c Release -o out
+RUN dotnet publish -c Release -o /app/publish
 
 # Build da imagem
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1
+FROM base AS final
 WORKDIR /app
-COPY --from=build-env /app/out .
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "RatesAPI.dll"]

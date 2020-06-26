@@ -72,7 +72,7 @@ namespace RatesAPI
                 {
                     Title = "RatesAPI",
                     Version = "v0",
-                    Description = "RatesAPI description here",
+                    Description = "RatesAPI - Softplan challenge",
                     TermsOfService = new Uri("https://example.com/terms"),
                     Contact = new OpenApiContact
                     {
@@ -94,7 +94,7 @@ namespace RatesAPI
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
             app.UseRouting();
 
