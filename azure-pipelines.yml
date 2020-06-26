@@ -23,7 +23,7 @@ steps:
     containerRegistry: 'danieeelfrazuredevops|Azure Container Registry'
     repository: 'danielfr-softplan-rate-services-api'
     command: 'buildAndPush'
-    Dockerfile: './Dockerfile'
+    Dockerfile: 'Dockerfile'
     tags: |
       $(Build.BuildId)
       latest
