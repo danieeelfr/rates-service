@@ -10,30 +10,30 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: echo Tests here!!! ???
-  displayName: 'Unit tests'
+# - script: echo Tests here!!! ???
+#   displayName: 'Unit tests'
 
-- script: |
-    echo ....
-    echo ...
-  displayName: 'Run a multi-line script'
+# - script: |
+#     echo ....
+#     echo ...
+#   displayName: 'Run a multi-line script'
 
-- task: DotNetCoreCLI@2
+- task: Restore
   inputs:
     command: 'restore'
     projects: '**/*.csproj'
     feedsToUse: 'select'
     vstsFeed: '27aae03a-27a6-477f-b1bb-0d4760ace431'
-- task: DotNetCoreCLI@2
+- task: Build
   inputs:
     command: 'build'
     projects: '**/*.csproj'
-- task: DotNetCoreCLI@2
+- task: Unit tests
   inputs:
     command: 'test'
     projects: '**/*Tests/*.csproj'
     testRunTitle: 'Unit tests'
-- task: Docker@2
+- task: Dockerize
   inputs:
     containerRegistry: 'danieeelfrazuredevops|Azure Container Registry'
     repository: 'danielfr-softplan-rate-services-api'
