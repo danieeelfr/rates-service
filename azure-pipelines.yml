@@ -18,22 +18,22 @@ steps:
 #     echo ...
 #   displayName: 'Run a multi-line script'
 
-- task: Restore
+- task: Restore@2
   inputs:
     command: 'restore'
     projects: '**/*.csproj'
     feedsToUse: 'select'
     vstsFeed: '27aae03a-27a6-477f-b1bb-0d4760ace431'
-- task: Build
+- task: Build@2
   inputs:
     command: 'build'
     projects: '**/*.csproj'
-- task: Unit tests
+- task: Unit tests@2
   inputs:
     command: 'test'
     projects: '**/*Tests/*.csproj'
     testRunTitle: 'Unit tests'
-- task: Dockerize
+- task: Dockerize@2
   inputs:
     containerRegistry: 'danieeelfrazuredevops|Azure Container Registry'
     repository: 'danielfr-softplan-rate-services-api'
