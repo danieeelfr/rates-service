@@ -9,6 +9,7 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+steps:
 - script: |
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
@@ -20,7 +21,7 @@ pool:
     repository: 'rateservices-azuredevops'
     command: 'buildAndPush'
     Dockerfile: 'Dockerfile'
-    buildContext: './'
+    buildContext: '/'
     tags: |
       $(Build.BuildId)
       latest
