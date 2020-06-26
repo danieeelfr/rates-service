@@ -26,8 +26,11 @@ RUN dotnet build "./RatesAPI/RatesAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish
 # RUN dotnet publish -c Release -o out
-RUN sudo dotnet publish -c Release -o /app/publish
+RUN dotnet publish -c Release -o /app/publish
 
+RUN sudo chmod 666 /app 
+RUN sudo chmod 666 /app/publish
+ 
 # Build da imagem
 FROM base AS final
 WORKDIR /app
