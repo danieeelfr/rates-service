@@ -62,12 +62,12 @@ namespace RatesAPI
                     Title = "Softplan challenge - RatesAPI",
                     Version = "v0",
                     Description = "WebApi created for the Softplan challenge",
-                    TermsOfService = new Uri("https://example.com/terms"),
+                    TermsOfService = new Uri("http://google.com"),
                     Contact = new OpenApiContact
                     {
                         Name = "Daniel Fonseca Reis",
                         Email = "danielfonsecareis@gmail.com",
-                        Url = new Uri("https://example.com/terms"),
+                        Url = new Uri("http://google.com"),
                     }
                 });
 
