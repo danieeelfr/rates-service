@@ -21,9 +21,11 @@ steps:
 - task: Docker@2
   inputs:
     containerRegistry: 'danieeelfrazuredevops|Azure Container Registry'
-    repository: 'danielfr-softplan-rate-services-api'
+    repository: 'rateservices-azuredevops'
     command: 'buildAndPush'
-    Dockerfile: 'Dockerfile'
+    Dockerfile: './Dockerfile'
+    buildContext: './'
     tags: |
       $(Build.BuildId)
       latest
+
