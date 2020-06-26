@@ -13,7 +13,6 @@ steps:
 - script: sudo chmod 666 /app/publish
   displayName: 'Run a one-line script'
 
-steps:
 - script: sudo chmod 666 /app
   displayName: 'Run a one-line script 2'
 
