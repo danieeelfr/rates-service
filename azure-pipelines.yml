@@ -18,6 +18,21 @@ steps:
     echo ...
   displayName: 'Run a multi-line script'
 
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'restore'
+    projects: '**/*.csproj'
+    feedsToUse: 'select'
+    vstsFeed: '27aae03a-27a6-477f-b1bb-0d4760ace431'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '**/*.csproj'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'test'
+    projects: '**/*Tests/*.csproj'
+    testRunTitle: 'Unit tests'
 - task: Docker@2
   inputs:
     containerRegistry: 'danieeelfrazuredevops|Azure Container Registry'
