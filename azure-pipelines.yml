@@ -10,8 +10,12 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: echo Hello, world!
+- script: sudo chmod 666 /app/publish
   displayName: 'Run a one-line script'
+
+steps:
+- script: sudo chmod 666 /app
+  displayName: 'Run a one-line script 2'
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
@@ -23,7 +27,7 @@ steps:
     containerRegistry: 'danieeelfrazuredevops|Azure Container Registry'
     repository: 'rateservices-azuredevops'
     command: 'buildAndPush'
-    Dockerfile: './Dockerfile'
+    Dockerfile: 'Dockerfile'
     buildContext: './'
     tags: |
       $(Build.BuildId)
