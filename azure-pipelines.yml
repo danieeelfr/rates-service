@@ -10,30 +10,34 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-# - script: echo Tests here!!! ???
-#   displayName: 'Unit tests'
+# - script: echo Starting Continuous Integration...
+#   displayName: 'Init'
 
 # - script: |
 #     echo ....
 #     echo ...
 #   displayName: 'Run a multi-line script'
 
-- task: Restore@2
+- task: DotNetCoreCLI@2
+  displayName: 'Restoring'
   inputs:
     command: 'restore'
     projects: '**/*.csproj'
     feedsToUse: 'select'
     vstsFeed: '27aae03a-27a6-477f-b1bb-0d4760ace431'
-- task: Build@2
+- task: DotNetCoreCLI@2
+  displayName: 'Building'
   inputs:
     command: 'build'
     projects: '**/*.csproj'
-- task: Unit tests@2
+- task: DotNetCoreCLI@2
+  displayName: 'Testing units'
   inputs:
     command: 'test'
     projects: '**/*Tests/*.csproj'
     testRunTitle: 'Unit tests'
-- task: Dockerize@2
+- task: Docker@2
+  displayName: 'Dockering'
   inputs:
     containerRegistry: 'danieeelfrazuredevops|Azure Container Registry'
     repository: 'danielfr-softplan-rate-services-api'
