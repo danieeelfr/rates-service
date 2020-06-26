@@ -9,12 +9,6 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-- script: 
-    sudo mkdir app
-    sudo chmod 666 /app
-  displayName: 'Run a one-line script'
-
 - script: |
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
@@ -26,7 +20,7 @@ steps:
     repository: 'rateservices-azuredevops'
     command: 'buildAndPush'
     Dockerfile: 'Dockerfile'
-    buildContext: '/'
+    buildContext: './'
     tags: |
       $(Build.BuildId)
       latest
