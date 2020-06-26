@@ -11,13 +11,13 @@ pool:
 
 steps:
 - script: 
-    mkdir app
+    sudo mkdir app
     sudo chmod 666 /app
   displayName: 'Run a one-line script'
 
 - script: 
     cd app
-    mkdir publish
+    sudo mkdir publish
     sudo chmod 666 /publish
   displayName: 'Run a one-line script 2'
 
@@ -32,7 +32,7 @@ steps:
     repository: 'rateservices-azuredevops'
     command: 'buildAndPush'
     Dockerfile: 'Dockerfile'
-    buildContext: './'
+    buildContext: '/'
     tags: |
       $(Build.BuildId)
       latest
