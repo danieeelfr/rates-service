@@ -59,9 +59,9 @@ namespace RatesAPI
                 options.DescribeAllParametersInCamelCase();
                 options.SwaggerDoc("v0", new OpenApiInfo
                 {
-                    Title = "RatesAPI",
+                    Title = "Softplan challenge - RatesAPI",
                     Version = "v0",
-                    Description = "RatesAPI - Softplan challenge",
+                    Description = "WebApi created for the Softplan challenge",
                     TermsOfService = new Uri("https://example.com/terms"),
                     Contact = new OpenApiContact
                     {
