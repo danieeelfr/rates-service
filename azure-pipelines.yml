@@ -8,6 +8,11 @@ trigger:
 
 pool:
   vmImage: 'ubuntu-latest'
+  demands:
+  - npm
+  
+
+  
 
 steps:
 # - script: echo Starting Continuous Integration...
@@ -17,7 +22,6 @@ steps:
 #     echo ....
 #     echo ...
 #   displayName: 'Run a multi-line script'
-
 - task: DotNetCoreCLI@2
   displayName: 'Restoring'
   inputs:
@@ -31,11 +35,29 @@ steps:
     command: 'build'
     projects: '**/*.csproj'
 - task: DotNetCoreCLI@2
+  displayName: 'Installing tools'
+  inputs:
+    command: custom
+    custom: tool
+    arguments: 'restore'  
+- task: DotNetCoreCLI@2
   displayName: 'Testing units'
   inputs:
     command: 'test'
-    projects: '**/*Tests/*.csproj'
-    testRunTitle: 'Unit tests'
+    arguments: '--configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
+    publishTestResults: true
+    projects: '**/*.Tests.csproj'
+- task: DotNetCoreCLI@2
+  displayName: 'Quality Assurance'
+  inputs:
+    command: custom
+    custom: tool
+    arguments: 'run reportgenerator -reports:$(Build.SourcesDirectory)/**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/CodeCoverage -reporttypes:HtmlInline_AzurePipelines'
+- task: PublishCodeCoverageResults@1
+  displayName: 'Building Quality report'
+  inputs:
+    codeCoverageTool: 'cobertura'
+    summaryFileLocation: '$(Build.SourcesDirectory)/**/coverage.cobertura.xml'
 - task: Docker@2
   displayName: 'Dockering'
   inputs:
