@@ -1,8 +1,3 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - master
 
@@ -10,38 +5,28 @@ pool:
   vmImage: 'ubuntu-latest'
   demands:
   - npm
-  
-
-  
 
 steps:
-# - script: echo Starting Continuous Integration...
-#   displayName: 'Init'
-
-# - script: |
-#     echo ....
-#     echo ...
-#   displayName: 'Run a multi-line script'
 - task: DotNetCoreCLI@2
-  displayName: 'Restoring'
+  displayName: 'Restore'
   inputs:
     command: 'restore'
     projects: '**/*.csproj'
     feedsToUse: 'select'
     vstsFeed: '27aae03a-27a6-477f-b1bb-0d4760ace431'
 - task: DotNetCoreCLI@2
-  displayName: 'Building'
+  displayName: 'Build'
   inputs:
     command: 'build'
     projects: '**/*.csproj'
 - task: DotNetCoreCLI@2
-  displayName: 'Installing tools'
+  displayName: 'Install tools'
   inputs:
     command: custom
     custom: tool
     arguments: 'restore'  
 - task: DotNetCoreCLI@2
-  displayName: 'Testing units'
+  displayName: 'Unit tests'
   inputs:
     command: 'test'
     arguments: '--configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=$(Build.SourcesDirectory)/TestResults/Coverage/'
@@ -54,7 +39,7 @@ steps:
     custom: tool
     arguments: 'run reportgenerator -reports:$(Build.SourcesDirectory)/**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/CodeCoverage -reporttypes:HtmlInline_AzurePipelines'
 - task: PublishCodeCoverageResults@1
-  displayName: 'Building Quality report'
+  displayName: 'Quality report'
   inputs:
     codeCoverageTool: 'cobertura'
     summaryFileLocation: '$(Build.SourcesDirectory)/**/coverage.cobertura.xml'

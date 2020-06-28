@@ -22,13 +22,10 @@ WORKDIR "/src/."
 
 RUN dotnet build "./RatesAPI/RatesAPI.csproj" -c Release -o /app/build
 
-# Build da aplicacao
-
 FROM build AS publish
-# RUN dotnet publish -c Release -o out
+
 RUN dotnet publish -c Release -o /app/publish
 
-# Build da imagem
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
