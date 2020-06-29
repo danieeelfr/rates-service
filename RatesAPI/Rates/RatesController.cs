@@ -5,9 +5,9 @@ using System;
 
 namespace RatesAPI.Admin.Controllers
 {
-    [Route("api/v0/")]
+    [Route("api/v0")]
     [ApiController]
-   ka [Authorize (Roles = "AuthorizedUser")]
+    [Authorize (Roles = "AuthorizedUser")]
     public class RatesController : ControllerBase
     {
         [HttpGet("taxajuros")]
