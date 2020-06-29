@@ -25,37 +25,22 @@ namespace Services
             if (!result.IsValid)
                 throw new BusinessException(result.Errors.Select(x => x.ErrorMessage).LastOrDefault());
 
-            User user = null;
+            if (!filter.Email.ToLower().Equals("valid-user@gmail.com")) 
+                    throw new BusinessException("User not found or not authorized!");
 
-            if (filter.Email.ToLower().Equals("valid-user@gmail.com")) {                
-                // fake valid user from database
-                user = new User(){
-                    Email = "valid-user@gmail.com",
-                    Name = "Valid User",
-                    Id = 1};
-            }; 
+            User fakeUser = new User(){ Email = "valid-user@gmail.com", Name = "Valid User", Id = 1};
 
-            if (user == null) 
-                 throw new BusinessException("User not found or not authorized!");
-
-            var token = GenerateToken(user, secret);
-            
-           
-            LoginOutputDTO outputDTO = BuildOutputDTO(user, token);
+            var token = GenerateToken(fakeUser, secret);
+                       
+            LoginOutputDTO outputDTO = BuildOutputDTO(token);
 
             return outputDTO;
         }
 
-        private static LoginOutputDTO BuildOutputDTO(User user, string token)
+        private static LoginOutputDTO BuildOutputDTO(string token)
         {
             return new LoginOutputDTO
             {
-                User = new UserOutputDTO
-                {
-                    Id = user.Id,
-                    Name = user.Name,
-                    Email = user.Email
-                },
                 AccessToken = token
             };
         }
