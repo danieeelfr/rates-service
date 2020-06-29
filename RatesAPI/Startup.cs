@@ -23,7 +23,6 @@ namespace RatesAPI
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<ILoginService, LoginService>();
@@ -59,31 +58,24 @@ namespace RatesAPI
                 options.DescribeAllParametersInCamelCase();
                 options.SwaggerDoc("v0", new OpenApiInfo
                 {
-                    Title = "Softplan challenge - RateServicesAPI (API 1)",
+                    Title = "RatesAPI (API 1)",
                     Version = "v0",
-                    Description = "WebApi created for the Softplan challenge",
-                    TermsOfService = new Uri("http://linkedin.com"),
+                    Description = "Softplan challenge",
                     Contact = new OpenApiContact
                     {
-                        Name = "Daniel Fonseca Reis",
-                        Email = "danielfonsecareis@gmail.com",
-                        Url = new Uri("http://linkedin.com"),
+                        Name = " Daniel Fonseca Reis",
+                        Email = "danielfonsecareis@gmail.com"
                     }
                 });
-
             });
-
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            // app.UseHttpsRedirection();
 
             app.UseRouting();
 
@@ -105,9 +97,8 @@ namespace RatesAPI
 
             app.UseSwaggerUI(c =>
             {
-
                 c.RoutePrefix = "";
-                c.SwaggerEndpoint("/swagger/v0/swagger.json", "RatesAPI");
+                c.SwaggerEndpoint("/swagger/v0/swagger.json", "rates-api (API 1)");
             });
         }
     }

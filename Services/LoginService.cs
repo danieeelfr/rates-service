@@ -1,6 +1,4 @@
-﻿using Core;
-
-using Core.Exceptions;
+﻿using Core.Exceptions;
 using Core.Filters.Login;
 using Core.Models.Login.DTOs;
 using Core.Models.Users;
@@ -41,6 +39,7 @@ namespace Services
                  throw new BusinessException("User not found or not authorized!");
 
             var token = GenerateToken(user, secret);
+            
            
             LoginOutputDTO outputDTO = BuildOutputDTO(user, token);
 
@@ -88,6 +87,5 @@ namespace Services
             var result = await validator.ValidateAsync(userLogin).ConfigureAwait(true);
             return result;
         }
-
     }
 }
