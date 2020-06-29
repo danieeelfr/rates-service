@@ -3,7 +3,7 @@ using Core.Filters.Login;
 using Core.Services;
 using Xunit;
 
-namespace Services.Tests
+namespace Services.Tests.Login
 {
     public class LoginTests
     {
