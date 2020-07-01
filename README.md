@@ -1,87 +1,97 @@
-# Softplan Challenge - API 2 (consumer-api)
+# Tech Challenge - API 1 (rate-services-api)
 
-One Paragraph of project description goes here
+## Solution overview
 
-## Getting Started
+![overview](Resources/Img/api1.png)
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+## DevOps flow
 
-### Prerequisites
+![devops](Resources/Img/devops.png)
 
-What things you need to install the software and how to install them
+### Continuous integration pipeline
 
-```
-Give examples
-```
+![devops](Resources/Img/ci.gif)
 
-### Installing
+### Continuous delivery pipeline
 
-A step by step series of examples that tell you how to get a development env running
+![devops](Resources/Img/delivery.gif)
 
-Say what the step will be
+## Quality assurance
 
-```
-Give the example
-```
+### Coverage report
 
-And repeat
+![devcoverageops](Resources/Img/coverage.png)
 
-```
-until finished
-```
+## Running tests
 
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
+### Unit and/or Integrated tests
 
 ```
-Give an example
+dotnet test
 ```
 
-### And coding style tests
-
-Explain what these tests test and why
+### With coverage
 
 ```
-Give an example
+dotnet test \                    
+  --configuration Development \
+  /p:CollectCoverage=true \
+  /p:CoverletOutputFormat=cobertura \
+  /p:CoverletOutput=./TestResults/Coverage/
 ```
 
-## Deployment
+### Coverage report
 
-Add additional notes about how to deploy this on a live system
+```
+dotnet tool run reportgenerator \
+  -reports:./TestResults/Coverage/coverage.cobertura.xml \
+  -targetdir:./CodeCoverage \
+  -reporttypes:HtmlInline_AzurePipelines
+```
+
+## Dockering
+
+### Build an docker image locally
+
+```
+docker build --pull --rm -f "Dockerfile" -t rate-services-api:latest "."
+```
+
+### Running the docker image in a locally container
+
+```
+docker run --rm -d  -p 5000:5000/tcp -p 5001:5001/tcp rate-services-api:latest
+```
+
+## API documentation with Swagger
+
+```
+http://localhost:5000/index.html
+```
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* .NET Core 3.1
+* .NET Tools
+* C#
+* GitHub
+* Jwt
+* Microsoft Azure
+* Swagger
+* Ubuntu 18.3
+* Visual Studio Code
 
-## Contributing
+## What I've learning?
 
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
-## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* Azure - Apps for containers
+* Azure DevOps - Continuous integration (CI)
+* Azure DevOps - Continuous delivery (CD)
+* Azure DevOps - Quality analisys & coverage reports
+* Developing .NET applications using Ubuntu and vscode.
+* Docker - dockering .NET applications
+* Docker - Azure Container Registry
+* GitHub actions (not applied)
+* Integration tests
+* Pact tests (not applied)
+* Unit tests with xUnity
+* Whimsical (draws and diagrams)

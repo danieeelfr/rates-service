@@ -9,7 +9,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading.Tasks;
 
-namespace RatesAPI.Security.Controllers
+namespace RatesAPI.Controllers
 {
     [Route("api/v0/auth")]
     [ApiController]

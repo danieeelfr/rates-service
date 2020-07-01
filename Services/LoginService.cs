@@ -20,7 +20,7 @@ namespace Services
     {
         public async Task<LoginOutputDTO> Login(UserLoginFilter filter, string secret)
         {
-            var result = await ValidateFields(filter).ConfigureAwait(false);
+            var result = await ValidateFields(filter);
 
             if (!result.IsValid)
                 throw new BusinessException(result.Errors.Select(x => x.ErrorMessage).LastOrDefault());
@@ -57,7 +57,7 @@ namespace Services
                     new Claim(ClaimTypes.Name, user.Name),
                     new Claim(ClaimTypes.Role, "AuthorizedUser")
                 }),
-                Expires = DateTime.UtcNow.AddDays(0.25),
+                Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 

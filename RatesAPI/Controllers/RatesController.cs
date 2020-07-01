@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using System;
 
-namespace RatesAPI.Admin.Controllers
+namespace RatesAPI.Controllers
 {
     [Route("api/v0")]
     [ApiController]
