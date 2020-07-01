@@ -10,7 +10,7 @@ COPY ["./", "./"]
 COPY ["RatesAPI/RatesAPI.csproj", "./RatesAPI/"]
 COPY ["Services/Services.csproj", "./Services/"]
 COPY ["Core/Core.csproj", "./Core/"]
-COPY ["Service.Tests/Service.Tests.csproj", "./Service.Tests/"]
+COPY ["Services.Tests/Services.Tests.csproj", "./Services.Tests/"]
 
 RUN dotnet restore "./RatesAPI/RatesAPI.csproj"
 
