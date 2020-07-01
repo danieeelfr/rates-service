@@ -5,6 +5,7 @@ using Core.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading.Tasks;
@@ -18,10 +19,13 @@ namespace RatesAPI.Controllers
         private readonly ILoginService _loginService;
         private readonly IConfiguration _configuration;
 
-        public SecurityController(ILoginService loginService, IConfiguration configuration)
+        private IMemoryCache _cache;
+
+        public SecurityController(ILoginService loginService, IConfiguration configuration, IMemoryCache memoryCache)
         {
             this._loginService = loginService;
             this._configuration = configuration;
+            this._cache = memoryCache;
         }
 
         [HttpPost]
@@ -35,15 +39,24 @@ namespace RatesAPI.Controllers
             try
             {
                 var key = _configuration.GetValue<string>("JwtToken:SecretKey");
-          
-                var userWithToken = await _loginService.Login(filter, key).ConfigureAwait(true);
 
-                if (userWithToken == null) 
-                { 
-                    return Forbid(); 
-                };
+                LoginOutputDTO output;
 
-                return Ok(userWithToken);
+                if (!_cache.TryGetValue(CacheKeys.Entry, out output))
+                {
+                    output = await _loginService.Login(filter, key).ConfigureAwait(true);
+
+                    var cacheEntryOptions = new MemoryCacheEntryOptions()
+                        .SetSlidingExpiration(TimeSpan.FromSeconds(60));
+
+                    if (output.AccessToken == null)
+                        return Forbid();
+
+                    _cache.Set(CacheKeys.Entry, output, cacheEntryOptions);
+
+                }
+
+                return Ok(output);
             }
             catch (BusinessException ex)
             {
@@ -55,5 +68,19 @@ namespace RatesAPI.Controllers
             }
         }
 
+    }
+
+    public static class CacheKeys
+    {
+        public static string Entry { get { return "_Entry"; } }
+        public static string CallbackEntry { get { return "_Callback"; } }
+        public static string CallbackMessage { get { return "_CallbackMessage"; } }
+        public static string Parent { get { return "_Parent"; } }
+        public static string Child { get { return "_Child"; } }
+        public static string DependentMessage { get { return "_DependentMessage"; } }
+        public static string DependentCTS { get { return "_DependentCTS"; } }
+        public static string Ticks { get { return "_Ticks"; } }
+        public static string CancelMsg { get { return "_CancelMsg"; } }
+        public static string CancelTokenSource { get { return "_CancelTokenSource"; } }
     }
 }

@@ -26,7 +26,7 @@ namespace RatesAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddTransient<ILoginService, LoginService>();
-
+            services.AddMemoryCache();
             services.AddCors();
             services.AddControllers();
 
