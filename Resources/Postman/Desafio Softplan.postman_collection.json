@@ -1,0 +1,249 @@
+{
+	"info": {
+		"_postman_id": "b5f999da-ee34-4d06-8e5e-9234ca15907b",
+		"name": "Desafio Softplan",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "API 1",
+			"item": [
+				{
+					"name": "/taxajuros (jwt extra)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b32a08fd-9121-49a9-9f65-2fa933ee275e",
+								"exec": [
+									"if (responseCode.code === 200) {",
+									"    var data = pm.response.json();",
+									"    pm.environment.set(\"token\", data.accessToken);",
+									"} else {",
+									"    pm.environment.set(\"token\", \"\");",
+									"}",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"valid-user@gmail.com\",\n  \"password\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://danielfr-softplan-rates-api.azurewebsites.net/api/v0/taxajurosjwt",
+							"protocol": "https",
+							"host": [
+								"danielfr-softplan-rates-api",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"v0",
+								"taxajurosjwt"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/taxajuros",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "927a3d32-aa6e-4120-ba4c-b90f5243d934",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer {{token}}",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://danielfr-softplan-rates-api.azurewebsites.net/api/v0/taxajuros",
+							"protocol": "https",
+							"host": [
+								"danielfr-softplan-rates-api",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"v0",
+								"taxajuros"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/auth (extra)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b32a08fd-9121-49a9-9f65-2fa933ee275e",
+								"exec": [
+									"if (responseCode.code === 200) {",
+									"    var data = pm.response.json();",
+									"    pm.environment.set(\"token\", data.accessToken);",
+									"} else {",
+									"    pm.environment.set(\"token\", \"\");",
+									"}",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"valid-user@gmail.com\",\n  \"password\": \"string\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://danielfr-softplan-rates-api.azurewebsites.net/api/v0/taxajuros",
+							"protocol": "https",
+							"host": [
+								"danielfr-softplan-rates-api",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"v0",
+								"taxajuros"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "API 2",
+			"item": [
+				{
+					"name": "/showmethecode",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://danielfr-softplan-consumer-api.azurewebsites.net/api/v0/showmethecode",
+							"protocol": "https",
+							"host": [
+								"danielfr-softplan-consumer-api",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"v0",
+								"showmethecode"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/calculajuros",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://danielfr-softplan-consumer-api.azurewebsites.net/api/v0/calculajuros?valorInicial=100&meses=5",
+							"protocol": "https",
+							"host": [
+								"danielfr-softplan-consumer-api",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"api",
+								"v0",
+								"calculajuros"
+							],
+							"query": [
+								{
+									"key": "valorInicial",
+									"value": "100"
+								},
+								{
+									"key": "meses",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

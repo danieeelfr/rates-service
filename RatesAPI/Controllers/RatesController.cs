@@ -7,17 +7,29 @@ namespace RatesAPI.Controllers
 {
     [Route("api/v0")]
     [ApiController]
-    [Authorize (Roles = "AuthorizedUser")]
+   
     public class RatesController : ControllerBase
     {
+        [Authorize (Roles = "AuthorizedUser")]
+        [HttpGet("taxajurosjwt")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public ActionResult<double> GetRateUsingJwt()
+        {
+           return GetInterestRate();
+        }
+
         [HttpGet("taxajuros")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public ActionResult<double> GetInterestRate()
+        public ActionResult<double> GetRate()
+        {
+            return GetInterestRate();
+        }
+
+        private ActionResult<double> GetInterestRate()
         {
             try
             {
                 var result = 1 * 0.01;
-
                 return Ok(result);
             }
             catch (Exception ex)
