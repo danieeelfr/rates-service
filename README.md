@@ -20,7 +20,7 @@
 
 ### Coverage report
 
-![devcoverageops](Resources/Img/coverage.png)
+![devcoverageops](Resources/Img/coverageapi1.png)
 
 ## Running tests
 
